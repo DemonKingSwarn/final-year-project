@@ -11,6 +11,22 @@ public partial class Player : Sprite2D
 	[Export] PackedScene bullet = ResourceLoader.Load<PackedScene>("res://scenes/bullet.tscn");
 	[Export] Node2D bulletHolder;
 
+	bool canShoot = true;
+
+	[Export] Timer reloadTimer;
+
+    public override void _Ready()
+    {
+        gameManager.player = this;
+    }
+
+    public override void _ExitTree()
+    {
+        gameManager.player = null;
+    }
+
+    
+
 	public override void _Process(double delta)
 	{
 		
@@ -21,9 +37,16 @@ public partial class Player : Sprite2D
 
 		this.GlobalPosition += speed * velocity * (float)delta;
 
-		if(Input.IsActionJustPressed("fire"))
+		if(Input.IsActionPressed("fire") && canShoot)
 		{
 			gameManager.InstanceNode(bullet, this.GlobalPosition, bulletHolder);
+			reloadTimer.Start();
+			canShoot = false;
 		}
+	}
+
+	void OnReloadTimeOut()
+	{
+		canShoot = true;
 	}
 }

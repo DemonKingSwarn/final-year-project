@@ -3,8 +3,15 @@
 [ext_resource type="Texture2D" uid="uid://c4ox36vesaybn" path="res://assets/sprites/player.png" id="1_ne4te"]
 [ext_resource type="Script" path="res://scripts/Player.cs" id="2_jpbb5"]
 
-[node name="Player" type="Sprite2D"]
+[node name="Player" type="Sprite2D" node_paths=PackedStringArray("reloadTimer")]
 modulate = Color(0.252516, 0.577927, 1, 1)
 texture_filter = 1
 texture = ExtResource("1_ne4te")
 script = ExtResource("2_jpbb5")
+reloadTimer = NodePath("ReloadTimer")
+
+[node name="ReloadTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="ReloadTimer" to="." method="OnReloadTimeOut"]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://83w6pthhqb6w"]
+
+[ext_resource type="Texture2D" uid="uid://c4ox36vesaybn" path="res://assets/sprites/player.png" id="1_k8uqf"]
+[ext_resource type="Script" path="res://scripts/Enemy.cs" id="2_y1jv3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hr2qv"]
+size = Vector2(16, 16)
+
+[node name="Enemy" type="Sprite2D" node_paths=PackedStringArray("stunTimer")]
+modulate = Color(1, 0.307514, 0.287446, 1)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_k8uqf")
+script = ExtResource("2_y1jv3")
+stunTimer = NodePath("StunTimer")
+speed = 75.0
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_hr2qv")
+
+[node name="StunTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[connection signal="area_entered" from="HitBox" to="." method="OnHitBoxEntered"]
+[connection signal="timeout" from="StunTimer" to="." method="OnStunTimeout"]
