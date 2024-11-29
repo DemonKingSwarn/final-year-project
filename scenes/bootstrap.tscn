@@ -1,3 +1,10 @@
 [gd_scene format=3 uid="uid://c4xnjqubgpjpn"]
 
 [node name="Bootstrap" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1152.0
+offset_bottom = 646.0
+color = Color(0.839251, 0.638471, 0.572976, 1)

@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="college final year proj"
+run/main_scene="res://scenes/bootstrap.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [dotnet]
 
@@ -21,3 +26,7 @@ project/assembly_name="college final year proj"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg")
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
