@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmth1fqu5wuka"]
+
+[ext_resource type="Texture2D" uid="uid://c4ox36vesaybn" path="res://assets/sprites/player.png" id="1_wc8ns"]
+[ext_resource type="Script" path="res://scripts/Bullet.cs" id="2_jcbmt"]
+
+[node name="Bullet" type="Sprite2D"]
+modulate = Color(0.25098, 0.576471, 1, 1)
+texture = ExtResource("1_wc8ns")
+script = ExtResource("2_jcbmt")

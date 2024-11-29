@@ -1,10 +1,24 @@
-[gd_scene format=3 uid="uid://c4xnjqubgpjpn"]
+[gd_scene load_steps=3 format=3 uid="uid://c4xnjqubgpjpn"]
+
+[ext_resource type="Script" path="res://scripts/GameManager.cs" id="1_edihl"]
+[ext_resource type="PackedScene" uid="uid://dnp7ssci6t4ak" path="res://scenes/player_scene.tscn" id="1_rwlv5"]
 
 [node name="Bootstrap" type="Node2D"]
+script = ExtResource("1_edihl")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_right = 1152.0
-offset_bottom = 646.0
-color = Color(0.839251, 0.638471, 0.572976, 1)
+offset_right = 642.0
+offset_bottom = 363.0
+color = Color(0, 0, 0, 1)
+
+[node name="BulletHolder" type="Node2D" parent="CanvasLayer"]
+
+[node name="Player" parent="CanvasLayer" node_paths=PackedStringArray("gameManager", "bulletHolder") instance=ExtResource("1_rwlv5")]
+position = Vector2(320, 180)
+scale = Vector2(1.9375, 2)
+gameManager = NodePath("../..")
+bulletHolder = NodePath("../BulletHolder")
+
+[node name="Camera2D" type="Camera2D" parent="."]
