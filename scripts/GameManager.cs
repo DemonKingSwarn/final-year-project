@@ -4,6 +4,9 @@ public partial class GameManager : Node
 {
     [Export] float maxFPS = 60f;
 
+	[Export] PackedScene enemy = ResourceLoader.Load<PackedScene>("res://scenes/enemy.tscn");
+	[Export] Node2D enemyHolder;
+
 	public Node2D? player = null;
 
     public override void _Ready()
@@ -18,4 +21,16 @@ public partial class GameManager : Node
         nodeInstance.GlobalPosition = location;
         return nodeInstance;
     }
+
+	void OnEnemySpawnTimeout()
+	{
+		Vector2 enemyPos = new Vector2((float)GD.RandRange(-160f, 670f), (float)GD.RandRange(-90f, 390f));
+
+		while(enemyPos.X < 640f && enemyPos.X > -80f || enemyPos.Y < 360f && enemyPos.Y > -45f)
+		{	
+			enemyPos = new Vector2((float)GD.RandRange(-160f, 670f), (float)GD.RandRange(-90f, 390f));
+		}
+
+		InstanceNode(enemy, enemyPos,  enemyHolder);
+	}
 }

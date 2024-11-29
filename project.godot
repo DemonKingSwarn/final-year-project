@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="college final year proj"
+config/name="Pixel Adventures"
 run/main_scene="res://scenes/bootstrap.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
