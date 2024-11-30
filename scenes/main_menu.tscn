@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dn3hjgu4tf26m"]
+[gd_scene load_steps=8 format=3 uid="uid://dn3hjgu4tf26m"]
 
 [ext_resource type="FontFile" uid="uid://dpf8ijcwv612k" path="res://assets/fonts/Font.ttf" id="1_dmw4w"]
 [ext_resource type="Script" path="res://scripts/MainMenu.cs" id="1_j7iam"]
 [ext_resource type="Script" path="res://addons/post_processing/node/post_process.gd" id="2_axfcb"]
 [ext_resource type="Script" path="res://addons/post_processing/resource/post_processing_configuration.gd" id="3_eyfua"]
+[ext_resource type="Texture2D" uid="uid://b36fe7kd71kg4" path="res://assets/sprites/original-outline-horizontal-light.svg" id="5_fcon8"]
 
 [sub_resource type="Resource" id="Resource_l1rfu"]
 script = ExtResource("3_eyfua")
@@ -169,6 +170,11 @@ text = "CREDITS
 layout_mode = 2
 text = "QUIT
 "
+
+[node name="Original-outline-horizontal-light" type="Sprite2D" parent="MarginContainer/VBoxContainer"]
+position = Vector2(270, 176)
+scale = Vector2(0.253125, 0.246154)
+texture = ExtResource("5_fcon8")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="Play"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Credits" to="." method="Credits"]

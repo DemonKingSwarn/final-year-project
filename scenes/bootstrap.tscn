@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c4xnjqubgpjpn"]
+[gd_scene load_steps=10 format=3 uid="uid://c4xnjqubgpjpn"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.cs" id="1_edihl"]
 [ext_resource type="PackedScene" uid="uid://dnp7ssci6t4ak" path="res://scenes/player_scene.tscn" id="1_rwlv5"]
+[ext_resource type="PackedScene" uid="uid://8j7xu1lmafr0" path="res://scenes/pause_menu.tscn" id="2_m70c8"]
 [ext_resource type="FontFile" uid="uid://dpf8ijcwv612k" path="res://assets/fonts/Font.ttf" id="3_68uit"]
 [ext_resource type="Script" path="res://addons/post_processing/node/post_process.gd" id="3_xr2ri"]
 [ext_resource type="Script" path="res://addons/post_processing/resource/post_processing_configuration.gd" id="4_yrooo"]
@@ -87,13 +88,14 @@ glow_normalized = true
 glow_bloom = 0.15
 glow_blend_mode = 0
 
-[node name="bootstrap" type="Node2D" node_paths=PackedStringArray("enemyHolder", "bulletHolder", "pickupHolder", "bloodHolder", "enemySpawnTimer", "scoreText")]
+[node name="bootstrap" type="Node2D" node_paths=PackedStringArray("enemyHolder", "bulletHolder", "pickupHolder", "bloodHolder", "enemySpawnTimer", "pauseMenu", "scoreText")]
 script = ExtResource("1_edihl")
 enemyHolder = NodePath("EnemyHolder")
 bulletHolder = NodePath("BulletHolder")
 pickupHolder = NodePath("PickupHolder")
 bloodHolder = NodePath("BloodHolder")
 enemySpawnTimer = NodePath("EnemySpawnTimer")
+pauseMenu = NodePath("CanvasLayer/PauseMenu")
 scoreText = NodePath("CanvasLayer/UI/Score")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -130,6 +132,9 @@ theme_override_font_sizes/font_size = 128
 text = "100"
 horizontal_alignment = 1
 
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_m70c8")]
+visible = false
+
 [node name="BulletHolder" type="Node2D" parent="."]
 
 [node name="PickupHolder" type="Node2D" parent="."]
@@ -151,10 +156,11 @@ configuration = SubResource("Resource_3chig")
 environment = SubResource("Environment_wrhbl")
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 5.0
 autostart = true
 
 [node name="DifficultyTimer" type="Timer" parent="EnemySpawnTimer"]
+wait_time = 2.0
 autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("screenShakeTimer")]

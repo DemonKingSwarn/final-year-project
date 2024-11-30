@@ -16,6 +16,8 @@ public partial class GameManager : Node2D
 
     [Export] public CameraControls? camera;
 
+    [Export] public PauseMenu pauseMenu;
+
 	[Export] Label scoreText;
 
 	public Node2D? player = null;
@@ -80,13 +82,6 @@ public partial class GameManager : Node2D
             ResourceSaver.Save(res, saveFilePath);
         }
     }
-
-    
-    /*void loadscore()
-    {
-        int highscore = (int)savefile.get("highscore");
-        highscoretext.text = "highscore: " + highscore;
-    }*/
 
     public void GameOver()
     {

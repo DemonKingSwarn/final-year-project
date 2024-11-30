@@ -54,6 +54,15 @@ public partial class Player : Sprite2D
             gameManager.GameOver();
         }
 
+        if(Input.IsActionJustPressed("Pause") && GetTree().Paused == false)
+        {
+            gameManager.pauseMenu.Pause();
+        }
+        else if(Input.IsActionJustPressed("Pause") && GetTree().Paused == true)
+        {
+            gameManager.pauseMenu.Resume();
+        }
+
         //GD.Print($"health: {health}");
 
     }
