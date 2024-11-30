@@ -12,16 +12,26 @@ public partial class GameManager : Node
 	[Export] public Node2D bulletHolder;
 	[Export] public Node2D pickupHolder;
 
+    [Export] Timer enemySpawnTimer;
+
+    [Export] public CameraControls? camera;
+
 	[Export] Label scoreText;
 
 	public Node2D? player = null;
 
     string saveFilePath = "user://score.tres";
 
+    Resource saveFile = GD.Load("user://score.tres");
+
+    int oldHighScore;
+
 
     public override void _Ready()
     {
         Engine.MaxFps = (int)maxFPS;
+        oldHighScore = (int)saveFile.Get("highScore");
+        GD.Print(oldHighScore);
     }
 
     public Node2D InstanceNode(PackedScene node, Vector2 location, Node parent)
@@ -42,7 +52,16 @@ public partial class GameManager : Node
 		}
 
 		InstanceNode(enemy, enemyPos,  enemyHolder);
+        enemySpawnTimer.WaitTime *= 0.95f;
 	}
+
+    void OnDifficultyTimout()
+    {
+        if(enemySpawnTimer.WaitTime > 0.25)
+        {
+            enemySpawnTimer.WaitTime -= 0.1;
+        }
+    }
 
     public override void _Process(double delta)
     {
@@ -53,20 +72,25 @@ public partial class GameManager : Node
     public void SaveScore()
     {
         var res = (SaveGame)GD.Load("res://scripts/SaveGame.cs").Call("new");
-        
-        if(score > (int)res.Get("highscore")){
+        if(score > oldHighScore){
             res.Set("highScore", score);
             ResourceSaver.Save(res, saveFilePath);
+        } else {
+            res.Set("highScore", oldHighScore);
         }
     }
 
-    /*
-    void LoadScore()
+    
+    /*void LoadScore()
     {
-        var res = GD.Load(saveFilePath);
-        int highScore = (int)res.Get("highScore");
-        GD.Print(highScore);
+        int highScore = (int)saveFile.Get("highScore");
+        highScoreText.Text = "HIGHSCORE: " + highScore;
+    }*/
+
+    public void GameOver()
+    {
+        SaveScore();
+        GetTree().ReloadCurrentScene();
     }
-    */
 
 }

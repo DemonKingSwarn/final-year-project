@@ -36,6 +36,11 @@ public partial class Enemy : Sprite2D
 
 		if(hp <= 0f)
 		{
+			if(gameManager.camera != null)
+			{
+				gameManager.camera.ScreenShake(80f, 0.2d);
+			}
+
 			gameManager.score += 10;
 			gameManager.InstanceNode(playerPickUp, GlobalPosition, gameManager.pickupHolder);
 			QueueFree();

@@ -1,20 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4xnjqubgpjpn"]
+[gd_scene load_steps=9 format=3 uid="uid://c4xnjqubgpjpn"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.cs" id="1_edihl"]
 [ext_resource type="PackedScene" uid="uid://dnp7ssci6t4ak" path="res://scenes/player_scene.tscn" id="1_rwlv5"]
 [ext_resource type="FontFile" uid="uid://dpf8ijcwv612k" path="res://assets/fonts/Font.ttf" id="3_68uit"]
 [ext_resource type="Script" path="res://addons/post_processing/node/post_process.gd" id="3_xr2ri"]
 [ext_resource type="Script" path="res://addons/post_processing/resource/post_processing_configuration.gd" id="4_yrooo"]
+[ext_resource type="Script" path="res://scripts/CameraControls.cs" id="6_q370j"]
 
 [sub_resource type="Resource" id="Resource_3chig"]
 script = ExtResource("4_yrooo")
 reload = false
 ASCII = false
 ASCIISize = Vector2(4, 9)
-ChromaticAberration = false
+ChromaticAberration = true
 StrenghtCA = 1.0
-Blur = false
-L_O_D = 1.0
+Blur = true
+L_O_D = 0.101
 FishEye = false
 FishEyeAspect = 1.0
 FishEyeDistortion = 1.0
@@ -22,7 +23,7 @@ FishEyeRadius = 1.0
 FishEyeAlpha = 1.0
 FishEyeCrop = 1.0
 FishEyeCropColor = Color(0, 0, 0, 1)
-Vignette = false
+Vignette = true
 VignetteIntensity = 0.4
 VignetteOpacity = 0.5
 VignetteR_G_B = Color(0, 0, 0, 1)
@@ -80,35 +81,28 @@ ScreenShake = false
 ScreenShakePower = 0.1
 
 [sub_resource type="Environment" id="Environment_wrhbl"]
+background_mode = 3
 glow_enabled = true
 glow_normalized = true
 glow_bloom = 0.15
 glow_blend_mode = 0
 
-[node name="bootstrap" type="Node2D" node_paths=PackedStringArray("enemyHolder", "bulletHolder", "pickupHolder", "scoreText")]
+[node name="bootstrap" type="Node2D" node_paths=PackedStringArray("enemyHolder", "bulletHolder", "pickupHolder", "enemySpawnTimer", "scoreText", "highScoreText")]
 script = ExtResource("1_edihl")
-enemyHolder = NodePath("CanvasLayer/EnemyHolder")
-bulletHolder = NodePath("CanvasLayer/BulletHolder")
-pickupHolder = NodePath("CanvasLayer/PickupHolder")
+enemyHolder = NodePath("EnemyHolder")
+bulletHolder = NodePath("BulletHolder")
+pickupHolder = NodePath("PickupHolder")
+enemySpawnTimer = NodePath("EnemySpawnTimer")
 scoreText = NodePath("CanvasLayer/UI/Score")
+highScoreText = NodePath("")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
 offset_right = 643.0
 offset_bottom = 362.0
 color = Color(0, 0, 0, 1)
-
-[node name="BulletHolder" type="Node2D" parent="CanvasLayer"]
-
-[node name="PickupHolder" type="Node2D" parent="CanvasLayer"]
-
-[node name="Player" parent="CanvasLayer" node_paths=PackedStringArray("gameManager") instance=ExtResource("1_rwlv5")]
-position = Vector2(320, 180)
-scale = Vector2(1.453, 1.5)
-gameManager = NodePath("../..")
-
-[node name="EnemyHolder" type="Node2D" parent="CanvasLayer"]
 
 [node name="UI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -132,6 +126,17 @@ theme_override_font_sizes/font_size = 128
 text = "100"
 horizontal_alignment = 1
 
+[node name="BulletHolder" type="Node2D" parent="."]
+
+[node name="PickupHolder" type="Node2D" parent="."]
+
+[node name="Player" parent="." node_paths=PackedStringArray("gameManager") instance=ExtResource("1_rwlv5")]
+position = Vector2(320, 180)
+scale = Vector2(1.453, 1.5)
+gameManager = NodePath("..")
+
+[node name="EnemyHolder" type="Node2D" parent="."]
+
 [node name="PostProcess" type="CanvasLayer" parent="."]
 script = ExtResource("3_xr2ri")
 configuration = SubResource("Resource_3chig")
@@ -140,6 +145,20 @@ configuration = SubResource("Resource_3chig")
 environment = SubResource("Environment_wrhbl")
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 3.0
 autostart = true
 
+[node name="DifficultyTimer" type="Timer" parent="EnemySpawnTimer"]
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("screenShakeTimer")]
+position = Vector2(320, 180)
+script = ExtResource("6_q370j")
+screenShakeTimer = NodePath("ScreenShakeTime")
+
+[node name="ScreenShakeTime" type="Timer" parent="Camera2D"]
+one_shot = true
+
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="OnEnemySpawnTimeout"]
+[connection signal="timeout" from="EnemySpawnTimer/DifficultyTimer" to="." method="OnDifficultyTimout"]
+[connection signal="timeout" from="Camera2D/ScreenShakeTime" to="Camera2D" method="OnScreenShakeTimeout"]

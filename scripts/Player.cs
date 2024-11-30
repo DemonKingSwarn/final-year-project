@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using Godot;
 
 public partial class Player : Sprite2D
@@ -37,8 +36,8 @@ public partial class Player : Sprite2D
         velocity.Normalized();
 
         Vector2 clampedPos = new Vector2(GlobalPosition.X, GlobalPosition.Y);
-        clampedPos.X = Mathf.Clamp(clampedPos.X, 0f, 640f);
-        clampedPos.Y = Mathf.Clamp(clampedPos.Y, 0f, 360f);
+        clampedPos.X = Mathf.Clamp(clampedPos.X, 24f, 616f);
+        clampedPos.Y = Mathf.Clamp(clampedPos.Y, 24f, 336f);
         this.GlobalPosition = clampedPos;
 
         this.GlobalPosition += speed * velocity * (float)delta;
@@ -52,8 +51,7 @@ public partial class Player : Sprite2D
 
         if (health <= 0f)
         {
-            gameManager.SaveScore();
-            GetTree().ReloadCurrentScene();
+            gameManager.GameOver();
         }
 
         //GD.Print($"health: {health}");
