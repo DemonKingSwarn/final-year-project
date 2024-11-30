@@ -36,6 +36,11 @@ public partial class Player : Sprite2D
 
         velocity.Normalized();
 
+        Vector2 clampedPos = new Vector2(GlobalPosition.X, GlobalPosition.Y);
+        clampedPos.X = Mathf.Clamp(clampedPos.X, 0f, 640f);
+        clampedPos.Y = Mathf.Clamp(clampedPos.Y, 0f, 360f);
+        this.GlobalPosition = clampedPos;
+
         this.GlobalPosition += speed * velocity * (float)delta;
 
         if (Input.IsActionPressed("fire") && canShoot)
@@ -51,7 +56,7 @@ public partial class Player : Sprite2D
             GetTree().ReloadCurrentScene();
         }
 
-        GD.Print($"health: {health}");
+        //GD.Print($"health: {health}");
 
     }
 

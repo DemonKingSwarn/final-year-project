@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
+using System.Windows.Markup;
 using Godot;
 
 public partial class GameManager : Node
@@ -18,17 +16,12 @@ public partial class GameManager : Node
 
 	public Node2D? player = null;
 
-    string saveFilePath = "user://score.json";
+    string saveFilePath = "user://score.tres";
 
-    Godot.Collections.Dictionary<string, int> Dict = new Godot.Collections.Dictionary<string, int>{
-        {"highScore", 0}
-    };
 
     public override void _Ready()
     {
         Engine.MaxFps = (int)maxFPS;
-
-        LoadScore();
     }
 
     public Node2D InstanceNode(PackedScene node, Vector2 location, Node parent)
@@ -56,31 +49,24 @@ public partial class GameManager : Node
         scoreText.Text = score.ToString();
     }
 
+
     public void SaveScore()
     {
-        foreach(var (key, amount) in Dict)
-        {
-            if(key == "highScore")
-            {
-                if(amount < score)
-                {
-                    Dict["highScore"] = score;
-                }
-            }
+        var res = (SaveGame)GD.Load("res://scripts/SaveGame.cs").Call("new");
+        
+        if(score > (int)res.Get("highscore")){
+            res.Set("highScore", score);
+            ResourceSaver.Save(res, saveFilePath);
         }
-
-        var file = Godot.FileAccess.Open(saveFilePath, Godot.FileAccess.ModeFlags.Write);
-
-        file.StoreLine(Dict.ToString());
     }
 
+    /*
     void LoadScore()
     {
-        if(File.Exists(saveFilePath))
-        {
-            string jsonString = File.ReadAllText(saveFilePath);
-            Dict = JsonSerializer.Deserialize<Godot.Collections.Dictionary<string, int>>(jsonString);
-        }
+        var res = GD.Load(saveFilePath);
+        int highScore = (int)res.Get("highScore");
+        GD.Print(highScore);
     }
-	
+    */
+
 }
