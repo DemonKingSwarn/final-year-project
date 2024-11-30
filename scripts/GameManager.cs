@@ -1,7 +1,6 @@
-using System.Windows.Markup;
 using Godot;
 
-public partial class GameManager : Node
+public partial class GameManager : Node2D
 {
     [Export] float maxFPS = 60f;
 
@@ -11,7 +10,8 @@ public partial class GameManager : Node
 	[Export] Node2D enemyHolder;
 	[Export] public Node2D bulletHolder;
 	[Export] public Node2D pickupHolder;
-
+    [Export] public Node2D bloodHolder;
+    
     [Export] Timer enemySpawnTimer;
 
     [Export] public CameraControls? camera;
@@ -77,14 +77,15 @@ public partial class GameManager : Node
             ResourceSaver.Save(res, saveFilePath);
         } else {
             res.Set("highScore", oldHighScore);
+            ResourceSaver.Save(res, saveFilePath);
         }
     }
 
     
-    /*void LoadScore()
+    /*void loadscore()
     {
-        int highScore = (int)saveFile.Get("highScore");
-        highScoreText.Text = "HIGHSCORE: " + highScore;
+        int highscore = (int)savefile.get("highscore");
+        highscoretext.text = "highscore: " + highscore;
     }*/
 
     public void GameOver()

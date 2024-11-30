@@ -1,0 +1,175 @@
+[gd_scene load_steps=7 format=3 uid="uid://dn3hjgu4tf26m"]
+
+[ext_resource type="FontFile" uid="uid://dpf8ijcwv612k" path="res://assets/fonts/Font.ttf" id="1_dmw4w"]
+[ext_resource type="Script" path="res://scripts/MainMenu.cs" id="1_j7iam"]
+[ext_resource type="Script" path="res://addons/post_processing/node/post_process.gd" id="2_axfcb"]
+[ext_resource type="Script" path="res://addons/post_processing/resource/post_processing_configuration.gd" id="3_eyfua"]
+
+[sub_resource type="Resource" id="Resource_l1rfu"]
+script = ExtResource("3_eyfua")
+reload = false
+ASCII = false
+ASCIISize = Vector2(4, 9)
+ChromaticAberration = true
+StrenghtCA = 1.0
+Blur = true
+L_O_D = 0.101
+FishEye = false
+FishEyeAspect = 1.0
+FishEyeDistortion = 1.0
+FishEyeRadius = 1.0
+FishEyeAlpha = 1.0
+FishEyeCrop = 1.0
+FishEyeCropColor = Color(0, 0, 0, 1)
+Vignette = true
+VignetteIntensity = 0.4
+VignetteOpacity = 0.5
+VignetteR_G_B = Color(0, 0, 0, 1)
+Glitch = false
+GlitchRange = 0.05
+GlitchNoiseQuality = 250.0
+GlitchIntenity = 0.0088
+GlitchOffset = 0.03
+GlitchColorOffset = 1.3
+Outline = false
+OutlineColor = Color(1, 1, 1, 1)
+OutlineThreshold = 0.0
+OutlineBlend = 0.01
+Grain = true
+GrainPower = 53
+CircularWaves = false
+CircularWavesAmplitude = 2.0
+CircularWavesFrequency = 12.69
+CircularWavesRippleRate = 9.2
+SpeedLines = false
+SpeedLinesColor = Color(1, 1, 1, 1)
+SpeedLinesCount = 2
+SpeedLineDensity = 0.072
+SpeedLineSpeed = 20
+ColorCorrection = false
+ColorCorrectionTint = Color(0, 0, 0, 1)
+ColorCorrectionBrightness = 0.0
+ColorCorrectionSaturation = 0.0
+Palette = false
+Pixelate = false
+PixelatePixelSize = 8
+CRT = false
+overlay = false
+scanlines_opacity = 0.4
+scanlines_width = 0.25
+grille_opacity = 0.3
+pixelate = true
+roll_speed = 8.0
+roll_size = 15.0
+roll_variation = 1.8
+distort_intensity = 0.05
+noise_opacity = 0.4
+noise_speed = 5.0
+static_noise_intensity = 0.06
+aberration = 0.03
+brightness = 1.4
+discolor = true
+warp_amount = 1.0
+clip_warp = false
+vignette_intensity = 0.4
+vignette_opacity = 0.5
+AnalogMonitor = false
+AnalogMonitorResolution = Vector2(256, 256)
+ScreenShake = false
+ScreenShakePower = 0.1
+
+[sub_resource type="Environment" id="Environment_60nlc"]
+background_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.15
+glow_blend_mode = 0
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("highscoreText")]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+script = ExtResource("1_j7iam")
+highscoreText = NodePath("HighScoreText")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -242.0
+offset_top = 2.0
+offset_right = 509.0
+offset_bottom = 140.0
+grow_horizontal = 2
+scale = Vector2(0.63591, 0.588608)
+theme_override_fonts/font = ExtResource("1_dmw4w")
+theme_override_font_sizes/font_size = 128
+text = "PIXEL ADVENTURES"
+horizontal_alignment = 1
+
+[node name="HighScoreText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -91.0
+offset_top = 83.0
+offset_right = 660.0
+offset_bottom = 221.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.251421, 0.170524)
+theme_override_fonts/font = ExtResource("1_dmw4w")
+theme_override_font_sizes/font_size = 128
+text = "HIGHSCORE: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PostProcess" type="CanvasLayer" parent="."]
+script = ExtResource("2_axfcb")
+configuration = SubResource("Resource_l1rfu")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="PostProcess"]
+environment = SubResource("Environment_60nlc")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = 155.0
+offset_right = 26.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "PLAY
+"
+
+[node name="Credits" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "CREDITS
+"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "QUIT
+"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="Play"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Credits" to="." method="Credits"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="Quit"]

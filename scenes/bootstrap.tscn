@@ -87,14 +87,14 @@ glow_normalized = true
 glow_bloom = 0.15
 glow_blend_mode = 0
 
-[node name="bootstrap" type="Node2D" node_paths=PackedStringArray("enemyHolder", "bulletHolder", "pickupHolder", "enemySpawnTimer", "scoreText", "highScoreText")]
+[node name="bootstrap" type="Node2D" node_paths=PackedStringArray("enemyHolder", "bulletHolder", "pickupHolder", "bloodHolder", "enemySpawnTimer", "scoreText")]
 script = ExtResource("1_edihl")
 enemyHolder = NodePath("EnemyHolder")
 bulletHolder = NodePath("BulletHolder")
 pickupHolder = NodePath("PickupHolder")
+bloodHolder = NodePath("BloodHolder")
 enemySpawnTimer = NodePath("EnemySpawnTimer")
 scoreText = NodePath("CanvasLayer/UI/Score")
-highScoreText = NodePath("")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -106,9 +106,13 @@ color = Color(0, 0, 0, 1)
 
 [node name="UI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 642.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -321.0
+offset_right = 321.0
 offset_bottom = 361.0
+grow_horizontal = 2
 scale = Vector2(1.0189, 0.994007)
 
 [node name="Score" type="Label" parent="CanvasLayer/UI"]
@@ -130,6 +134,8 @@ horizontal_alignment = 1
 
 [node name="PickupHolder" type="Node2D" parent="."]
 
+[node name="BloodHolder" type="Node2D" parent="."]
+
 [node name="Player" parent="." node_paths=PackedStringArray("gameManager") instance=ExtResource("1_rwlv5")]
 position = Vector2(320, 180)
 scale = Vector2(1.453, 1.5)
@@ -145,7 +151,7 @@ configuration = SubResource("Resource_3chig")
 environment = SubResource("Environment_wrhbl")
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 4.0
 autostart = true
 
 [node name="DifficultyTimer" type="Timer" parent="EnemySpawnTimer"]

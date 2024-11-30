@@ -7,6 +7,7 @@ public partial class Enemy : Sprite2D
 	[Export] Timer stunTimer;
 
 	[Export] PackedScene playerPickUp = ResourceLoader.Load<PackedScene>("res://scenes/pickup.tscn");
+	[Export] PackedScene bloodScene = ResourceLoader.Load<PackedScene>("res://scenes/blood.tscn");
 
 	[Export] float speed = 100f;
 
@@ -39,6 +40,12 @@ public partial class Enemy : Sprite2D
 			if(gameManager.camera != null)
 			{
 				gameManager.camera.ScreenShake(80f, 0.2d);
+			}
+
+			if(gameManager.bloodHolder != null)
+			{
+				Node2D blood = gameManager.InstanceNode(bloodScene, GlobalPosition, gameManager.bloodHolder);
+				blood.Rotation = velocity.Angle();
 			}
 
 			gameManager.score += 10;

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://db766c4d11w68"]
+[gd_scene load_steps=4 format=3 uid="uid://db766c4d11w68"]
 
 [ext_resource type="Texture2D" uid="uid://c4ox36vesaybn" path="res://assets/sprites/player.png" id="1_cfhyk"]
+[ext_resource type="Script" path="res://scripts/PickupControl.cs" id="2_krd0v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fxwor"]
 size = Vector2(16, 16)
@@ -9,8 +10,14 @@ size = Vector2(16, 16)
 modulate = Color(0.521616, 0.953256, 0.401475, 1)
 scale = Vector2(0.8125, 0.8125)
 texture = ExtResource("1_cfhyk")
+script = ExtResource("2_krd0v")
 
 [node name="Area2D" type="Area2D" parent="." groups=["PlayerPick"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_fxwor")
+
+[node name="PickTimer" type="Timer" parent="."]
+wait_time = 1.2
+
+[connection signal="timeout" from="PickTimer" to="." method="OnPickTimeout"]
