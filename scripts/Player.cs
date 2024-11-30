@@ -9,7 +9,6 @@ public partial class Player : Sprite2D
 	Vector2 velocity;
 
 	[Export] PackedScene bullet = ResourceLoader.Load<PackedScene>("res://scenes/bullet.tscn");
-	[Export] Node2D bulletHolder;
 
 	bool canShoot = true;
 
@@ -17,6 +16,7 @@ public partial class Player : Sprite2D
 
     public override void _Ready()
     {
+		gameManager = (GameManager)GetTree().Root.GetChild(0);
         gameManager.player = this;
     }
 
@@ -24,8 +24,6 @@ public partial class Player : Sprite2D
     {
         gameManager.player = null;
     }
-
-    
 
 	public override void _Process(double delta)
 	{
@@ -39,7 +37,7 @@ public partial class Player : Sprite2D
 
 		if(Input.IsActionPressed("fire") && canShoot)
 		{
-			gameManager.InstanceNode(bullet, this.GlobalPosition, bulletHolder);
+			gameManager.InstanceNode(bullet, this.GlobalPosition, gameManager.bulletHolder);
 			reloadTimer.Start();
 			canShoot = false;
 		}

@@ -4,8 +4,13 @@ public partial class GameManager : Node
 {
     [Export] float maxFPS = 60f;
 
+	[Export] public int score = 0;
+
 	[Export] PackedScene enemy = ResourceLoader.Load<PackedScene>("res://scenes/enemy.tscn");
 	[Export] Node2D enemyHolder;
+	[Export] public Node2D bulletHolder;
+
+	[Export] Label scoreText;
 
 	public Node2D? player = null;
 
@@ -33,4 +38,9 @@ public partial class GameManager : Node
 
 		InstanceNode(enemy, enemyPos,  enemyHolder);
 	}
+
+    public override void _Process(double delta)
+    {
+        scoreText.Text = score.ToString();
+    }
 }

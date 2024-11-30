@@ -34,13 +34,14 @@ public partial class Enemy : Sprite2D
 
 		if(hp <= 0f)
 		{
+			gameManager.score += 10;
 			QueueFree();
 		}
     }
 
 	void OnHitBoxEntered(Area2D area)
 	{
-		if(area.IsInGroup("EnemyDamager"))
+		if(area.IsInGroup("EnemyDamager") && isStun == false)
 		{
 			Modulate = new Color(1f, 1f, 1f);
 			velocity = -velocity * 4f;

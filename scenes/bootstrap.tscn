@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4xnjqubgpjpn"]
+[gd_scene load_steps=8 format=3 uid="uid://c4xnjqubgpjpn"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.cs" id="1_edihl"]
 [ext_resource type="PackedScene" uid="uid://dnp7ssci6t4ak" path="res://scenes/player_scene.tscn" id="1_rwlv5"]
+[ext_resource type="FontFile" uid="uid://dpf8ijcwv612k" path="res://assets/fonts/Font.ttf" id="3_68uit"]
 [ext_resource type="Script" path="res://addons/post_processing/node/post_process.gd" id="3_xr2ri"]
 [ext_resource type="Script" path="res://addons/post_processing/resource/post_processing_configuration.gd" id="4_yrooo"]
 
@@ -84,28 +85,48 @@ glow_normalized = true
 glow_bloom = 0.15
 glow_blend_mode = 0
 
-[node name="bootstrap" type="Node2D" node_paths=PackedStringArray("enemyHolder")]
+[node name="bootstrap" type="Node2D" node_paths=PackedStringArray("enemyHolder", "bulletHolder", "scoreText")]
 script = ExtResource("1_edihl")
 enemyHolder = NodePath("CanvasLayer/EnemyHolder")
+bulletHolder = NodePath("CanvasLayer/BulletHolder")
+scoreText = NodePath("CanvasLayer/UI/Score")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_right = 642.0
-offset_bottom = 363.0
+offset_right = 643.0
+offset_bottom = 362.0
 color = Color(0, 0, 0, 1)
 
 [node name="BulletHolder" type="Node2D" parent="CanvasLayer"]
 
-[node name="Player" parent="CanvasLayer" node_paths=PackedStringArray("gameManager", "bulletHolder") instance=ExtResource("1_rwlv5")]
+[node name="Player" parent="CanvasLayer" node_paths=PackedStringArray("gameManager") instance=ExtResource("1_rwlv5")]
 position = Vector2(320, 180)
 scale = Vector2(1.453, 1.5)
 gameManager = NodePath("../..")
-bulletHolder = NodePath("../BulletHolder")
 
 [node name="EnemyHolder" type="Node2D" parent="CanvasLayer"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 642.0
+offset_bottom = 361.0
+
+[node name="Score" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 1282.0
+offset_bottom = 146.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_68uit")
+theme_override_font_sizes/font_size = 128
+text = "100"
+horizontal_alignment = 1
 
 [node name="PostProcess" type="CanvasLayer" parent="."]
 script = ExtResource("3_xr2ri")
