@@ -6,6 +6,8 @@ public partial class Enemy : Sprite2D
 
 	[Export] Timer stunTimer;
 
+	[Export] PackedScene playerPickUp = ResourceLoader.Load<PackedScene>("res://scenes/pickup.tscn");
+
 	[Export] float speed = 100f;
 
 	float hp = 3f;
@@ -35,6 +37,7 @@ public partial class Enemy : Sprite2D
 		if(hp <= 0f)
 		{
 			gameManager.score += 10;
+			gameManager.InstanceNode(playerPickUp, GlobalPosition, gameManager.pickupHolder);
 			QueueFree();
 		}
     }

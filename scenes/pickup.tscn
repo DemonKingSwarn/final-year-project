@@ -10,7 +10,7 @@ modulate = Color(0.521616, 0.953256, 0.401475, 1)
 scale = Vector2(0.8125, 0.8125)
 texture = ExtResource("1_cfhyk")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["PlayerPick"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_fxwor")

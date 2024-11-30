@@ -14,7 +14,7 @@ script = ExtResource("2_y1jv3")
 stunTimer = NodePath("StunTimer")
 speed = 75.0
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="HitBox" type="Area2D" parent="." groups=["Enemy"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("RectangleShape2D_hr2qv")
